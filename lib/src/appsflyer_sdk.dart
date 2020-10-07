@@ -114,27 +114,28 @@ class AppsflyerSdk {
   // Accessing AppsFlyer Conversion Data from the SDK
   void _registerConversionDataCallback() {
     if (_afGCDStreamController == null) {
-      _afGCDStreamController = StreamController<Map>(onCancel: () {
+      _afGCDStreamController = StreamController<Map>.broadcast(onCancel: () {
         _afGCDStreamController.close();
-      });
+      })
+      ;
     }
   }
 
   Stream<Map> get conversionDataStream {
-    return _afGCDStreamController?.stream?.asBroadcastStream();
+    return _afGCDStreamController?.stream;
   }
 
   // Accessing AppsFlyer attribution, referred from deep linking
   void _registerOnAppOpenAttributionCallback() {
     if (_afOpenAttributionStreamController == null) {
-      _afOpenAttributionStreamController = StreamController<Map>(onCancel: () {
+      _afOpenAttributionStreamController = StreamController<Map>.broadcast(onCancel: () {
         _afOpenAttributionStreamController.close();
       });
     }
   }
 
   Stream<Map> get appOpenAttributionStream {
-    return _afOpenAttributionStreamController?.stream?.asBroadcastStream();
+    return _afOpenAttributionStreamController?.stream;
   }
 
   ///Returns `Stream`. Accessing AppsFlyer purchase validation data
